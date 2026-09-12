@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RoboBrain — Roblox Luau AI</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">RB</div>
+        <div>
+          <h1>RoboBrain</h1>
+          <span>Roblox Luau AI</span>
+        </div>
+      </div>
+      <div class="status"><i></i> Online</div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <button id="newChat" class="new-chat">＋ New chat</button>
+
+        <section class="side-section">
+          <div class="side-title">Tools</div>
+          <button class="side-btn active" data-panel="chat">▣ Chat</button>
+          <button class="side-btn" data-panel="memory">◈ Memory</button>
+          <button class="side-btn" data-panel="learn">↥ Teach AI</button>
+        </section>
+
+        <section class="side-section">
+          <div class="side-title">Quick prompts</div>
+          <button class="prompt-btn">Make a Roblox round system</button>
+          <button class="prompt-btn">Fix this Luau script</button>
+          <button class="prompt-btn">Make a clean inventory GUI</button>
+          <button class="prompt-btn">Explain this code</button>
+        </section>
+
+        <div class="sidebar-bottom">
+          <span>Model</span>
+          <b>Qwen3 Coder</b>
+          <small>Open-weight coding model</small>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div id="chatPanel" class="panel active">
+          <div id="messages" class="messages">
+            <div class="welcome">
+              <div class="welcome-icon">⌘</div>
+              <h2>Your Roblox coding AI</h2>
+              <p>Ask for Luau scripts, debugging, explanations, systems, or improvements.</p>
+              <div class="welcome-grid">
+                <button class="card-prompt" data-prompt="Create a Roblox round system with an intermission, minimum players, and a 60 second round.">Round system</button>
+                <button class="card-prompt" data-prompt="Make a Roblox inventory GUI with equipped ribbons and a clean modern layout.">Inventory GUI</button>
+                <button class="card-prompt" data-prompt="Debug this Roblox Luau script and explain exactly what is wrong.">Debug code</button>
+                <button class="card-prompt" data-prompt="Teach me how RemoteEvents work in Roblox with a small example.">Learn Luau</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer-wrap">
+            <div id="fileChips" class="file-chips"></div>
+            <div class="composer">
+              <textarea id="input" rows="1" placeholder="Ask RoboBrain to make or fix something in Roblox..."></textarea>
+              <div class="composer-bottom">
+                <div class="composer-tools">
+                  <label class="attach">
+                    ＋ Attach .lua/.luau
+                    <input id="fileInput" type="file" accept=".lua,.luau,.txt" multiple hidden>
+                  </label>
+                  <button id="clearFiles">Clear files</button>
+                </div>
+                <button id="send" class="send">Send ↗</button>
+              </div>
+            </div>
+            <div class="disclaimer">Your API key stays on the Vercel server. Don't put it in browser JavaScript.</div>
+          </div>
+        </div>
+
+        <div id="memoryPanel" class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Memory</h2>
+              <p>RoboBrain remembers useful examples in this browser.</p>
+            </div>
+            <button id="clearMemory" class="danger">Clear memory</button>
+          </div>
+          <div id="memoryList" class="memory-list"></div>
+        </div>
+
+        <div id="learnPanel" class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Teach RoboBrain</h2>
+              <p>Add your own Luau examples. They are used as learning context in future chats.</p>
+            </div>
+          </div>
+          <div class="learn-box">
+            <label>Example / lesson name</label>
+            <input id="lessonName" placeholder="e.g. My preferred round-system style">
+            <label>Your Luau example or rule</label>
+            <textarea id="lessonText" rows="12" placeholder="Paste a script, a correction, or a rule you want the AI to follow..."></textarea>
+            <button id="saveLesson" class="primary">Save lesson</button>
+          </div>
+          <div class="tip">
+            <b>How learning works</b>
+            <p>This starter uses retrieval-style memory: saved lessons are added to the model's context when you chat. It does not secretly retrain the model after every message. You can later connect a database and LoRA fine-tuning if you want real model training.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
