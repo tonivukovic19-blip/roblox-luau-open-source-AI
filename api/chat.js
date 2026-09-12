@@ -32,13 +32,19 @@ ${fileText||"(none)"}`;
         "X-Title":"RoboBrain Roblox AI"
       },
       body:JSON.stringify({
-        model:process.env.OPENROUTER_MODEL||"qwen/qwen3-coder",
+        model:process.env.OPENROUTER_MODEL||"openrouter/free",
         messages:[{role:"system",content:system},...messages.slice(-12)],
         temperature:0.25,
         max_tokens:5000
       })
     });
-    const data=await response.json();
+    const rawText=await response.text();
+    let data;
+    try{
+      data=JSON.parse(rawText);
+    }catch(parseErr){
+      return res.status(502).json({error:`OpenRouter returned a non-JSON response (status ${response.status}). Raw: ${rawText.slice(0,300)}`});
+    }
     if(!response.ok) return res.status(response.status).json({error:data?.error?.message||"OpenRouter request failed."});
     return res.status(200).json({answer:data.choices?.[0]?.message?.content||"No answer returned."});
   }catch(e){return res.status(500).json({error:e.message||"Server error"});}
